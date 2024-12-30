@@ -1,0 +1,5 @@
+weaviate-client
+text2vec
+fastapi
+uvicorn
+langchain-core

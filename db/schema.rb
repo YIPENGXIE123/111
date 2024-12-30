@@ -11,12 +11,35 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.2].define(version: 2024_12_05_021830) do
+  create_table "chat_history", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "knowledge_base_id", null: false
+    t.string "sender", null: false
+    t.text "message", null: false
+    t.datetime "created_at", null: false
+  end
+
   create_table "conversations", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.boolean "isDelete", default: false, null: false
     t.index ["user_id"], name: "index_conversations_on_user_id"
+  end
+
+  create_table "files", force: :cascade do |t|
+    t.integer "knowledge_base_id", null: false
+    t.string "file_name", null: false
+    t.text "file_content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "knowledge_bases", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "messages", force: :cascade do |t|
@@ -38,7 +61,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_05_021830) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "chat_history", "knowledge_bases", column: "knowledge_base_id"
+  add_foreign_key "chat_history", "users"
   add_foreign_key "conversations", "users"
+  add_foreign_key "files", "knowledge_bases", column: "knowledge_base_id", on_delete: :cascade
+  add_foreign_key "knowledge_bases", "users", on_delete: :cascade
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users"
 end
