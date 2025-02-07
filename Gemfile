@@ -52,7 +52,7 @@ end
 
 group :development, :test do
   # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem 'rspec-rails', '~> 5.0'
+  gem 'rspec-rails', '~> 7.1'
 end
 
 group :development do
